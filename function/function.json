@@ -6,7 +6,7 @@
       "direction": "in",
       "name": "msg",
       "queueName": "notificationqueue",
-      "connection": "{}"
+      "connection": "{tmp_service_bus_connection}"
     }
   ]
 }
