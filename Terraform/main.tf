@@ -83,7 +83,7 @@ resource "azurerm_linux_web_app" "linux_webapp" {
 
     app_command_line = "apt-get update && apt-get install -y build-essential g++ libffi-dev cmake libssl-dev && pip install --no-cache-dir -r requirements.txt && gunicorn --bind 0.0.0.0:8000 --workers 3 application:app"
     application_stack {
-      python_version = "3.9"
+      python_version = "3.10"
     }
   }
 
