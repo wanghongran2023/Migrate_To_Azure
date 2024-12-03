@@ -59,3 +59,34 @@ resource "azurerm_postgresql_flexible_server_firewall_rule" "allow_all_ips" {
   start_ip_address = "0.0.0.0"
   end_ip_address   = "255.255.255.255"
 }
+
+resource "azurerm_service_plan" "app_service_plan" {
+  name                = "python-app-service-plan"
+  location            = azurerm_resource_group.cms.location
+  resource_group_name = azurerm_resource_group.cms.name
+  sku_name            = "P0v3"
+  os_type             = "Linux"
+}
+
+resource "azurerm_linux_web_app" "linux_webapp" {
+  name                = var.app_config.name
+  location            = azurerm_resource_group.cms.location
+  resource_group_name = azurerm_resource_group.cms.name
+  service_plan_id     = azurerm_service_plan.app_service_plan.id
+
+  auth_settings {
+    enabled = false
+  }
+  
+  site_config {
+    always_on        = true
+
+    app_command_line = "apt-get update && apt-get install -y build-essential g++ && pip install -r requirements.txt && gunicorn --bind 0.0.0.0:8000 --workers 3 application:app"
+    application_stack {
+      python_version = "3.9"
+    }
+  }
+
+  app_settings = { 
+  }
+}
