@@ -100,8 +100,7 @@ resource "azurerm_servicebus_namespace" "servicebus" {
 
 resource "azurerm_servicebus_namespace_authorization_rule" "servicebus_authorization_rule" {
   name                = "RootManageSharedAccessKey"
-  namespace_name      = azurerm_servicebus_namespace.servicebus.name
-  resource_group_name = azurerm_resource_group.resource_group.name
+  namespace_id        = azurerm_servicebus_namespace.servicebus.id
   listen              = true
   send                = true
   manage              = true
