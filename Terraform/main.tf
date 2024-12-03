@@ -62,16 +62,16 @@ resource "azurerm_postgresql_flexible_server_firewall_rule" "allow_all_ips" {
 
 resource "azurerm_service_plan" "app_service_plan" {
   name                = "python-app-service-plan"
-  location            = azurerm_resource_group.cms.location
-  resource_group_name = azurerm_resource_group.cms.name
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
   sku_name            = "P0v3"
   os_type             = "Linux"
 }
 
 resource "azurerm_linux_web_app" "linux_webapp" {
   name                = var.app_config.name
-  location            = azurerm_resource_group.cms.location
-  resource_group_name = azurerm_resource_group.cms.name
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
   service_plan_id     = azurerm_service_plan.app_service_plan.id
 
   auth_settings {
