@@ -31,7 +31,7 @@ def main(msg: func.ServiceBusMessage):
 
         subject, message = notification
 
-        cursor.execute("SELECT first_name, email FROM attendees")
+        cursor.execute("SELECT first_name, email FROM attendee")
         attendees = cursor.fetchall()
 
         #for name, email in attendees:
