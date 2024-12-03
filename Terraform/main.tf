@@ -109,6 +109,10 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   resource_group_name = azurerm_resource_group.resource_group.name
   service_plan_id     = azurerm_service_plan.app_service_plan.id
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   auth_settings {
     enabled = false
   }
