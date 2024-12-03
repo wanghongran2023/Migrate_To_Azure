@@ -39,3 +39,9 @@ variable "servicebus_config" {
     name             = string
   })
 }
+
+variable "storage_account_config" {
+  type = object({
+    name             = string
+  })
+}
