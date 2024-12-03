@@ -6,7 +6,6 @@ on:
 jobs:
   DeployInfraAndBuild:
     name: Deploy Infra and Build
-    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Code Checkout
@@ -54,7 +53,7 @@ jobs:
 
   RestoreDataToDB:
     name: Restore Data to Postgres DB
-    #needs: DeployInfraAndBuild
+    needs: DeployInfraAndBuild
     runs-on: ubuntu-latest
     steps:
       - name: Code Checkout
