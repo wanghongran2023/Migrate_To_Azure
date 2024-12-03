@@ -26,7 +26,7 @@ resource "azurerm_postgresql_flexible_server" "dbserver" {
   resource_group_name = azurerm_resource_group.resource_group.name
   location            = azurerm_resource_group.resource_group.location
 
-  sku_name = "Standard_D2s_v3"
+  sku_name = "B_Standard_B1ms"
   storage_mb             = 32768
   version                = "13"
   administrator_login    = var.db_server_config.user
