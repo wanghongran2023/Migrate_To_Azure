@@ -101,7 +101,6 @@ resource "azurerm_servicebus_namespace" "servicebus" {
 resource "azurerm_servicebus_queue" "notificationqueue" {
   name                = "notificationqueue"
   namespace_id        = azurerm_servicebus_namespace.servicebus.id
-  resource_group_name = azurerm_resource_group.resource_group.name
   enable_partitioning    = false
   requires_duplicate_detection = false
   max_size_in_megabytes   = 1024
