@@ -22,7 +22,7 @@ def main(msg: func.ServiceBusMessage):
         connection = psycopg2.connect(host=db_host,database=db_name,user=db_user,password=db_password)
         cursor = connection.cursor()
 
-        cursor.execute("SELECT subject, message FROM notifications WHERE id = %s",(notification_id))
+        cursor.execute("SELECT subject, message FROM notifications WHERE id = %s",(notification_id,))
         notification = cursor.fetchone()
         
         if not notification:
@@ -35,7 +35,6 @@ def main(msg: func.ServiceBusMessage):
         attendees = cursor.fetchall()
 
         for name, email in attendees:
-            subject = '{}: {}'.format(name, subject)
             message = Mail(from_email='test@example.com',to_emails=email,subject=subject,plain_text_content=message)
             try:
                 sg = SendGridAPIClient(api_key)
