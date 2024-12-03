@@ -166,3 +166,33 @@ jobs:
         with:
           app-name: ${{ vars.APP_NAME }}
           slot-name: 'Production'
+
+  BuildFunctionAPI:
+    name: Build Function APP
+    needs: DeployInfraAndBuild
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Service Bus Connection String
+        uses: actions/download-artifact@v4
+        with:
+          name: service-bus-connection-string
+
+      - name: Update Config
+        working-directory: web
+        run: |
+           SERVICE_BUS_CONNECTION_STRING=$(cat ../service_bus_connection_string.txt)
+           ESCAPED_SERVICE_BUS_CONNECTION_STRING=$(echo "$SERVICE_BUS_CONNECTION_STRING" | sed 's/[&/]/\\&/g')
+           sed -i "s|{tmp_service_bus_connection}|$ESCAPED_SERVICE_BUS_CONNECTION_STRING|g" function.json
+
+      - name: Zip artifact for deployment
+        working-directory: web 
+        run: zip release.zip ./* -r
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-app
+          path: './web/release.zip'
