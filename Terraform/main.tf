@@ -100,7 +100,7 @@ resource "azurerm_servicebus_namespace" "servicebus" {
 
 resource "azurerm_servicebus_queue" "notificationqueue" {
   name                = "notificationqueue"
-  namespace_name      = azurerm_servicebus_namespace.servicebus.name
+  namespace_id        = azurerm_servicebus_namespace.servicebus.id
   resource_group_name = azurerm_resource_group.resource_group.name
   enable_partitioning    = false
   requires_duplicate_detection = false
@@ -155,7 +155,7 @@ resource "azurerm_linux_function_app" "function" {
 }
 
 resource "azurerm_role_assignment" "servicebus_receiver" {
-  principal_id         = azurerm_function_app.function.identity.0.principal_id
+  principal_id         = azurerm_linux_function_app.function.identity.0.principal_id
   role_definition_name = "Azure Service Bus Data Receiver"
   scope                = azurerm_servicebus_namespace.servicebus.id
 }
