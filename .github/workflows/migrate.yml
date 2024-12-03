@@ -101,5 +101,6 @@ jobs:
           name: service-bus-connection-string
 
       - name: Update Config
+        working-directory: web
         run: |
           
