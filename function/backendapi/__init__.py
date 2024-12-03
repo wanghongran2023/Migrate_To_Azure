@@ -46,7 +46,7 @@ def main(msg: func.ServiceBusMessage):
         completed_date = datetime.utcnow()
         cursor.execute(
             """
-            UPDATE notifications SET status = %s, completed_date = %s WHERE id = %s
+            UPDATE notification SET status = %s, completed_date = %s WHERE id = %s
             """,
             ('Notified {} attendees'.format(len(attendees)), completed_date, notification_id)
         )
