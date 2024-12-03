@@ -31,3 +31,7 @@ servicebus_config={
 storage_account_config={
     name             = "{tmp_storage_account_name}"  
 }
+
+function_config={
+    name             = "{tmp_function_name}"  
+}
