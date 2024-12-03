@@ -20,7 +20,7 @@ jobs:
         working-directory: web 
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libssl-dev python3-dev cmake
+          sudo apt-get install -y build-essential libssl-dev libuuid1 uuid-dev libcurl4-openssl-dev cmake
           pip install --upgrade pip setuptools wheel 
           pip install --no-cache-dir -r requirements.txt
           
