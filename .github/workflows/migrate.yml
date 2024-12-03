@@ -103,4 +103,10 @@ jobs:
       - name: Update Config
         working-directory: web
         run: |
-          
+           SERVICE_BUS_CONNECTION_STRING=$(cat ../service_bus_connection_string.txt)
+           ESCAPED_SERVICE_BUS_CONNECTION_STRING=$(echo "$SERVICE_BUS_CONNECTION_STRING" | sed 's/[&/]/\\&/g')
+           sed -i "s|{tmp_db_name}|${{ vars.DB_NAME }}|g" config.py
+           sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" config.py
+           sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" config.py
+           sed -i "s|{tmp_service_bus_connection}|$ESCAPED_SERVICE_BUS_CONNECTION_STRING|g" config.py
+           
