@@ -20,3 +20,6 @@ db_config={
     name             = "{tmp_db_name}"  
 }
 
+app_config={
+    name             = "{tmp_app_name}"  
+}
