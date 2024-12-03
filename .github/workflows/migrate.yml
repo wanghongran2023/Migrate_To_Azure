@@ -82,16 +82,16 @@ jobs:
       - name: Create Restore Data Script
         working-directory: data
         run: | 
-          echo "#!/bin/bash" > ../restoredata.sh
-          echo "export PGSSLMODE='require'" >> ../restoredata.sh
-          echo "export PGPASSWORD='${{ secrets.DB_SERVER_PASSWORD }}'" >> ../restoredata.sh
-          echo "pg_restore -U ${{ secrets.DB_SERVER_USER }} -h ${{ vars.DB_SERVER_NAME }}.postgres.database.azure.com -p 5432 -d ${{ vars.DB_NAME }} --clean --no-owner ./techconfdb_backup.tar" >> ../restoredata.sh
+          echo "#!/bin/bash" > ./restoredata.sh
+          echo "export PGSSLMODE='require'" >> ./restoredata.sh
+          echo "export PGPASSWORD='${{ secrets.DB_SERVER_PASSWORD }}'" >> ./restoredata.sh
+          echo "pg_restore -U ${{ secrets.DB_SERVER_USER }} -h ${{ vars.DB_SERVER_NAME }}.postgres.database.azure.com -p 5432 -d ${{ vars.DB_NAME }} --clean --no-owner ./techconfdb_backup.tar" >> ./restoredata.sh
           
       - name: Upload script
         uses: actions/upload-artifact@v4
         with:
           name: restoredata
-          path: 'restoredata.sh'
+          path: './data/restoredata.sh'
           
       - name: Run script
         working-directory: data
