@@ -36,22 +36,19 @@ def main(msg: func.ServiceBusMessage):
 
         for name, email in attendees:
             subject = '{}: {}'.format(name, subject)
-            message = Mail(from_email='test@example.com',to_emails=email,subject=subject,plain_text_content=content)
+            message = Mail(from_email='test@example.com',to_emails=email,subject=subject,plain_text_content=message)
             try:
                 sg = SendGridAPIClient(api_key)
                 response = sg.send(message)
             except Exception as e:
                 logging.error(f"An error occurred while sending email: {e}")
-            logging.info(f"Email sent to {name} ({email})")
 
         completed_date = datetime.utcnow()
         cursor.execute(
             """
-            UPDATE notifications
-            SET status = %s, completed_date = %s
-            WHERE id = %s
+            UPDATE notifications SET status = %s, completed_date = %s WHERE id = %s
             """,
-            ('Completed', completed_date, notification_id)
+            ('Notified {} attendees'.format(len(attendees)), completed_date, notification_id)
         )
         connection.commit()
 
