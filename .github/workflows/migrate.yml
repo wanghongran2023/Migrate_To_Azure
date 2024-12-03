@@ -72,4 +72,4 @@ jobs:
           PGPASSWORD: ${{ secrets.DB_SERVER_PASSWORD }}
           PGSSLMODE: require
         run: |
-          pg_restore -U ${{ secrets.DB_SERVER_USER }}@${{ vars.DB_SERVER_NAME }} -h ${{ vars.DB_SERVER_NAME }}.postgres.database.azure.com -p 5432 -d ${{ vars.DB_NAME }} --clean --no-owner ./techconfdb_backup.tar
+          pg_restore -U ${{ secrets.DB_SERVER_USER }} -h ${{ vars.DB_SERVER_NAME }}.postgres.database.azure.com -p 5432 -d ${{ vars.DB_NAME }} --clean --no-owner ./techconfdb_backup.tar
