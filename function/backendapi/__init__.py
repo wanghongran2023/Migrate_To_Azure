@@ -34,14 +34,14 @@ def main(msg: func.ServiceBusMessage):
         cursor.execute("SELECT name, email FROM attendees")
         attendees = cursor.fetchall()
 
-        for name, email in attendees:
-            email_subject = '{}: {}'.format(name, subject)
-            message = Mail(from_email='test@example.com',to_emails=email,subject=email_subject,plain_text_content=message)
-            try:
-                sg = SendGridAPIClient(api_key)
-                response = sg.send(message)
-            except Exception as e:
-                logging.error(f"An error occurred while sending email: {e}")
+        #for name, email in attendees:
+            #email_subject = '{}: {}'.format(name, subject)
+            #message = Mail(from_email='test@example.com',to_emails=email,subject=email_subject,plain_text_content=message)
+            #try:
+            #    sg = SendGridAPIClient(api_key)
+            #    response = sg.send(message)
+            #except Exception as e:
+            #    logging.error(f"An error occurred while sending email: {e}")
 
         completed_date = datetime.utcnow()
         cursor.execute(
@@ -55,5 +55,7 @@ def main(msg: func.ServiceBusMessage):
     except (Exception, psycopg2.DatabaseError) as error:
         logging.error(f"An error occurred: {error}")
     finally:
+        if cursor:
+            cursor.close()
         if connection:
-            connection.close()    
+            connection.close()
