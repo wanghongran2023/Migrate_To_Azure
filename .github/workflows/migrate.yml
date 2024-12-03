@@ -51,7 +51,19 @@ jobs:
           terraform validate
           terraform plan -var-file=variables.tfvars
           terraform apply -auto-approve -var-file=variables.tfvars
+          service_bus_connection_string=$(terraform output -raw service_bus_connection_string)
+          if [ -z "$service_bus_connection_string" ]; then
+            echo "Error: Service Bus connection string is empty!"
+            exit 1
+          fi
+          echo "$service_bus_connection_string" > ../service_bus_connection_string.txt
 
+      - name: Upload Service Bus Connection String as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: service-bus-connection-string
+          path: service_bus_connection_string.txt
+          
   RestoreDataToDB:
     name: Restore Data to Postgres DB
     needs: DeployInfraAndBuild
@@ -73,3 +85,21 @@ jobs:
           PGSSLMODE: require
         run: |
           pg_restore -U ${{ secrets.DB_SERVER_USER }} -h ${{ vars.DB_SERVER_NAME }}.postgres.database.azure.com -p 5432 -d ${{ vars.DB_NAME }} --clean --no-owner ./techconfdb_backup.tar
+
+          
+  BuildWebAPP:
+    name: Build Web APP
+    needs: DeployInfraAndBuild
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Service Bus Connection String
+        uses: actions/download-artifact@v4
+        with:
+          name: service-bus-connection-string
+
+      - name: Update Config
+        run: |
+          
