@@ -151,5 +151,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: ${{ secrets.APP_NAME }}
+          app-name: ${{ vars.APP_NAME }}
           slot-name: 'Production'
