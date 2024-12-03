@@ -3,33 +3,9 @@ name: Infra Construction
 on:
   workflow_dispatch:
 
-jobs:
-  TestBuild:
-    name: Test Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Code Checkout
-        uses: actions/checkout@v4
-    
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
-        
-      - name: Test Build
-        working-directory: web 
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential libssl-dev libuuid1 uuid-dev libcurl4-openssl-dev cmake
-          pip install --upgrade pip setuptools wheel 
-          sudo apt install -y llvm-14 llvm-14-dev
-          export PATH=/usr/lib/llvm-14/bin:$PATH
-          pip install --no-cache-dir -r requirements.txt
-          
-          
+jobs:  
   DeployInfraAndBuild:
     name: Deploy Infra and Build
-    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Code Checkout
