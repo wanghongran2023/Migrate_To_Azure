@@ -43,7 +43,7 @@ resource "azurerm_postgresql_flexible_server_database" "db" {
   name           = var.db_config.name
   server_id      = azurerm_postgresql_flexible_server.dbserver.id
   charset        = "UTF8"
-  collation      = "en_US.UTF-8"
+  collation      = "en_US.utf8"
 }
 
 resource "azurerm_postgresql_flexible_server_firewall_rule" "allow_azure_ips" {
