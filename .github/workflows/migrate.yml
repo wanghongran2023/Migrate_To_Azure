@@ -94,6 +94,7 @@ jobs:
           path: 'restoredata.sh'
           
       - name: Run script
+        working-directory: data
         run: | 
           sh restoredata.sh
           
