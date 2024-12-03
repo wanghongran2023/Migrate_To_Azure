@@ -109,4 +109,46 @@ jobs:
            sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" config.py
            sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" config.py
            sed -i "s|{tmp_service_bus_connection}|$ESCAPED_SERVICE_BUS_CONNECTION_STRING|g" config.py
-           
+
+      - name: Zip artifact for deployment
+        working-directory: web 
+        run: zip release.zip ./* -r
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-app
+          path: './web/release.zip'
+          
+  DeployWebAPP:
+    name: Deploy Web APP
+    needs: BuildWebAPP
+    runs-on: ubuntu-latest
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-app
+
+      - name: Unzip artifact for deployment
+        run: unzip release.zip
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.SP_CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v3
+        id: deploy-to-webapp
+        with:
+          app-name: ${{ secrets.APP_NAME }}
+          slot-name: 'Production'
