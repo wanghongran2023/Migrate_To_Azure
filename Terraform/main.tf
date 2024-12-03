@@ -98,6 +98,15 @@ resource "azurerm_servicebus_namespace" "servicebus" {
   sku                 = "Standard"
 }
 
+resource "azurerm_servicebus_queue" "notificationqueue" {
+  name                = "notificationqueue"
+  namespace_name      = azurerm_servicebus_namespace.servicebus.name
+  resource_group_name = azurerm_resource_group.resource_group.name
+  enable_partitioning    = false
+  requires_duplicate_detection = false
+  max_size_in_megabytes   = 1024
+}
+
 data "azurerm_servicebus_namespace_authorization_rule" "root_manage_access_key" {
   name                = "RootManageSharedAccessKey"
   namespace_id        = azurerm_servicebus_namespace.servicebus.id
