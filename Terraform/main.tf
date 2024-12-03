@@ -81,7 +81,7 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   site_config {
     always_on        = true
 
-    app_command_line = "apt-get update && apt-get install -y build-essential g++ && apt-get install -y libffi-dev && apt-get install -y cmake && pip install -r requirements.txt && gunicorn --bind 0.0.0.0:8000 --workers 3 application:app"
+    app_command_line = "apt-get update && apt-get install -y build-essential g++ libffi-dev cmake && pip install -r requirements.txt && gunicorn --bind 0.0.0.0:8000 --workers 3 application:app"
     application_stack {
       python_version = "3.9"
     }
