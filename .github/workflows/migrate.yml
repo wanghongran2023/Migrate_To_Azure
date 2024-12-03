@@ -47,6 +47,9 @@ jobs:
            
            sed -i "s|{tmp_storage_account_name}|${{ vars.STORAGE_ACCOUNT_NAME }}|g" variables.tfvars
 
+           
+           sed -i "s|{tmp_function_name}|${{ vars.FUNCTION_NAME }}|g" variables.tfvars
+
       - name: Start Terraform Deploy
         working-directory: Terraform
         run: |
