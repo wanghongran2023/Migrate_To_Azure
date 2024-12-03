@@ -125,3 +125,37 @@ resource "azurerm_storage_account" "storage_account" {
   account_replication_type = "LRS"
   access_tier              = "Cool"
 }
+
+
+
+resource "azurerm_linux_function_app" "function" {
+  name                = var.function_config.name
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
+  service_plan_id = azurerm_service_plan.app_service_plan.id
+  storage_account_name = azurerm_storage_account.storage_account.name
+  storage_account_access_key = azurerm_storage_account.storage_account.primary_access_key
+
+  site_config {
+    always_on        = true
+    application_stack {
+      python_version = "3.9"
+    }
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  app_settings = {
+    FUNCTIONS_WORKER_RUNTIME = "python"
+    SERVICE_BUS_CONNECTION_STRING  = azurerm_servicebus_namespace.servicebus.default_primary_connection_string
+    SERVICE_BUS_QUEUE_NAME         = azurerm_servicebus_queue.notificationqueue.name
+  }
+}
+
+resource "azurerm_role_assignment" "servicebus_receiver" {
+  principal_id         = azurerm_function_app.function.identity.0.principal_id
+  role_definition_name = "Azure Service Bus Data Receiver"
+  scope                = azurerm_servicebus_namespace.servicebus.id
+}
