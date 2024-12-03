@@ -69,7 +69,7 @@ jobs:
       - name: Start Restore Data
         working-directory: data
         env:
-          PGPASSWORD: ${{ secrets.DB_SERVER_PASSWORD }}
+          PGPASSWORD: '${{ secrets.DB_SERVER_PASSWORD }}'
           PGSSLMODE: require
         run: |
           pg_restore -U ${{ secrets.DB_SERVER_USER }} -h ${{ vars.DB_SERVER_NAME }}.postgres.database.azure.com -p 5432 -d ${{ vars.DB_NAME }} --clean --no-owner ./techconfdb_backup.tar
