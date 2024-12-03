@@ -25,7 +25,7 @@ resource "azurerm_postgresql_server" "dbserver" {
   name                         = var.db_server_config.name
   resource_group_name          = azurerm_resource_group.resource_group.name
   location                     = azurerm_resource_group.resource_group.location
-  version                      = "12"
+  version                      = "10"
   administrator_login          = var.db_server_config.user
   administrator_login_password = var.db_server_config.password
 
@@ -42,8 +42,8 @@ resource "azurerm_postgresql_database" "db" {
   name                = var.db_config.name
   resource_group_name = azurerm_resource_group.resource_group.name
   server_name         = azurerm_postgresql_server.dbserver.name
-  charset             = "UTF8" # Preferred charset for PostgreSQL
-  collation           = "English_United States.1252" # PostgreSQL collation
+  charset             = "UTF8"
+  collation           = "English_United States.1252"
 }
 
 resource "azurerm_postgresql_firewall_rule" "allow_azure_ips" {
