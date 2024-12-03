@@ -49,3 +49,24 @@ jobs:
           terraform init
           terraform plan -var-file=variables.tfvars
           terraform apply -auto-approve -var-file=variables.tfvars
+
+  RestoreDataToDB:
+    name: Restore Data to Postgres DB
+    needs: DeployInfraAndBuild
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Psql
+        run: |
+          sudo apt update
+          sudo apt install postgresql-client
+          pg_restore --version
+
+      - name: Start Restore Data
+        working-directory: data
+        env:
+          PGPASSWORD: ${{ secrets.DB_SERVER_PASSWORD }}
+        run: |
+          pg_restore -U ${{ secrets.DB_SERVER_USER }} -h ${{ vars.DB_SERVER_NAME }}.postgres.database.azure.com -p 5432 -d ${{ vars.DB_NAME }} --clean --no-owner ./techconfdb_backup.tar
