@@ -128,6 +128,11 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   }
 }
 
+resource "azurerm_role_assignment" "webapp_servicebus_sender" {
+  principal_id   = azurerm_linux_web_app.linux_webapp.identity[0].principal_id
+  role_definition_name = "Azure Service Bus Data Sender"
+  scope           = azurerm_servicebus_namespace.servicebus.id
+}
 
 resource "azurerm_linux_function_app" "function" {
   name                = var.function_config.name
