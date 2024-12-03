@@ -68,28 +68,6 @@ resource "azurerm_service_plan" "app_service_plan" {
   os_type             = "Linux"
 }
 
-resource "azurerm_linux_web_app" "linux_webapp" {
-  name                = var.app_config.name
-  location            = azurerm_resource_group.resource_group.location
-  resource_group_name = azurerm_resource_group.resource_group.name
-  service_plan_id     = azurerm_service_plan.app_service_plan.id
-
-  auth_settings {
-    enabled = false
-  }
-  
-  site_config {
-    always_on        = true
-
-    app_command_line = "apt-get update && apt-get install -y build-essential g++ libffi-dev cmake libssl-dev && pip install --upgrade pip setuptools wheel && pip install --no-cache-dir -r requirements.txt && gunicorn --bind 0.0.0.0:8000 --workers 3 application:app"
-    application_stack {
-      python_version = "3.10"
-    }
-  }
-
-  app_settings = { 
-  }
-}
 
 resource "azurerm_servicebus_namespace" "servicebus" {
   name                = var.servicebus_config.name
@@ -125,6 +103,30 @@ resource "azurerm_storage_account" "storage_account" {
   access_tier              = "Cool"
 }
 
+resource "azurerm_linux_web_app" "linux_webapp" {
+  name                = var.app_config.name
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
+  service_plan_id     = azurerm_service_plan.app_service_plan.id
+
+  auth_settings {
+    enabled = false
+  }
+  
+  site_config {
+    always_on        = true
+
+    app_command_line = "apt-get update && apt-get install -y build-essential g++ libffi-dev cmake libssl-dev && pip install --upgrade pip setuptools wheel && pip install --no-cache-dir -r requirements.txt && gunicorn --bind 0.0.0.0:8000 --workers 3 application:app"
+    application_stack {
+      python_version = "3.10"
+    }
+  }
+
+  app_settings = { 
+    SERVICE_BUS_CONNECTION_STRING  = azurerm_servicebus_namespace.servicebus.default_primary_connection_string
+    SERVICE_BUS_QUEUE_NAME         = azurerm_servicebus_queue.notificationqueue.name
+  }
+}
 
 
 resource "azurerm_linux_function_app" "function" {
