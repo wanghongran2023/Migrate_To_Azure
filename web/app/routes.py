@@ -67,31 +67,15 @@ def notification():
             db.session.add(notification)
             db.session.commit()
 
-            ##################################################
-            ## TODO: Refactor This logic into an Azure Function
-            ## Code below will be replaced by a message queue
-            #################################################
-            #attendees = Attendee.query.all()
-
-            #for attendee in attendees:
-            #    subject = '{}: {}'.format(attendee.first_name, notification.subject)
-            #    send_email(attendee.email, subject, notification.message)
-
-            #notification.completed_date = datetime.utcnow()
-            #notification.status = 'Notified {} attendees'.format(len(attendees))
-            #db.session.commit()
             with queue_client.get_sender() as sender:
-                sender.send(notification.id) 
-                logging.info(f"Sent id to queue notificationqueue: {notification.id}")
-            # TODO Call servicebus queue_client to enqueue notification ID
-
-            #################################################
-            ## END of TODO
-            #################################################
+                message_body = str(notification.id)
+                sender.send(Message(body=message_body.encode('utf-8'))) 
+                logging.info(f"Sent notification ID and data to queue notificationqueue: {notification.id}")
 
             return redirect('/Notifications')
-        except :
-            logging.error('log unable to save notification')
+        except Exception as e:
+            logging.error(f'Error occurred while saving notification: {e}')
+            flash('An error occurred while submitting the notification.')
 
     else:
         return render_template('notification.html')
