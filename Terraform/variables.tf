@@ -45,3 +45,9 @@ variable "storage_account_config" {
     name             = string
   })
 }
+
+variable "function_config" {
+  type = object({
+    name             = string
+  })
+}
