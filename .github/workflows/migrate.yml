@@ -3,6 +3,9 @@ name: Infra Construction
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write
+
 jobs:  
   DeployInfraAndBuild:
     name: Deploy Infra and Build
