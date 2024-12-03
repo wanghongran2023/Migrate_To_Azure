@@ -33,3 +33,9 @@ variable "app_config" {
     name             = string
   })
 }
+
+variable "servicebus_config" {
+  type = object({
+    name             = string
+  })
+}
