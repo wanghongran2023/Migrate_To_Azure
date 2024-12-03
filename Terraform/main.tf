@@ -98,15 +98,12 @@ resource "azurerm_servicebus_namespace" "servicebus" {
   sku                 = "Standard"
 }
 
-resource "azurerm_servicebus_namespace_authorization_rule" "servicebus_authorization_rule" {
+data "azurerm_servicebus_namespace_authorization_rule" "root_manage_access_key" {
   name                = "RootManageSharedAccessKey"
   namespace_id        = azurerm_servicebus_namespace.servicebus.id
-  listen              = true
-  send                = true
-  manage              = true
 }
 
 output "service_bus_connection_string" {
-  value = azurerm_servicebus_namespace_authorization_rule.servicebus_authorization_rule.primary_connection_string
+  value     = data.azurerm_servicebus_namespace_authorization_rule.root_manage_access_key.primary_connection_string
   sensitive = true
 }
