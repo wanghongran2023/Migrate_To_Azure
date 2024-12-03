@@ -4,7 +4,7 @@ app_dir = os.path.abspath(os.path.dirname(__file__))
 
 class BaseConfig:
     DEBUG = True
-    POSTGRES_URL=${{ vars.DB_SERVER_NAME }}.postgres.database.azure.com"
+    POSTGRES_URL="{tmp_db_server_name}.postgres.database.azure.com"
     POSTGRES_USER="{tmp_db_server_user}"
     POSTGRES_PW="{tmp_db_server_password}"
     POSTGRES_DB="{tmp_db_name}"
