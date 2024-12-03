@@ -22,7 +22,7 @@ def main(msg: func.ServiceBusMessage):
         connection = psycopg2.connect(host=db_host,database=db_name,user=db_user,password=db_password)
         cursor = connection.cursor()
 
-        cursor.execute("SELECT subject, message FROM notifications WHERE id = %s",(notification_id,))
+        cursor.execute("SELECT subject, message FROM notification WHERE id = %s",(notification_id,))
         notification = cursor.fetchone()
         
         if not notification:
