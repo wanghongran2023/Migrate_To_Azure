@@ -23,3 +23,7 @@ db_config={
 app_config={
     name             = "{tmp_app_name}"  
 }
+
+servicebus_config={
+    name             = "{tmp_servicebus_name}"  
+}
