@@ -35,8 +35,8 @@ def main(msg: func.ServiceBusMessage):
         attendees = cursor.fetchall()
 
         for name, email in attendees:
-            personalized_subject = '{}: {}'.format(name, notification.subject)
-            message = Mail(from_email='test@example.com',to_emails=to_email,subject=subject,plain_text_content=content)
+            subject = '{}: {}'.format(name, subject)
+            message = Mail(from_email='test@example.com',to_emails=email,subject=subject,plain_text_content=content)
             try:
                 sg = SendGridAPIClient(api_key)
                 response = sg.send(message)
