@@ -121,6 +121,7 @@ jobs:
            sed -i "s|{tmp_db_name}|${{ vars.DB_NAME }}|g" config.py
            sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" config.py
            sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" config.py
+           sed -i "s|{tmp_db_server_name}|${{ vars.DB_SERVER_NAME }}|g" config.py
            sed -i "s|{tmp_service_bus_connection}|$ESCAPED_SERVICE_BUS_CONNECTION_STRING|g" config.py
 
       - name: Zip artifact for deployment
