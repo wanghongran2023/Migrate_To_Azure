@@ -196,7 +196,12 @@ jobs:
            sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" ./backendapi/__init__.py
            sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" ./backendapi/__init__.py
            sed -i "s|{tmp_db_server_name}|${{ vars.DB_SERVER_NAME }}|g" ./backendapi/__init__.py
-
+      
+      - name: Set up Python version
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          
       - name: Build Func Packages for Deploy 
         run: |
           pushd './function'
