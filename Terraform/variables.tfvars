@@ -27,3 +27,7 @@ app_config={
 servicebus_config={
     name             = "{tmp_servicebus_name}"  
 }
+
+storage_account_config={
+    name             = "{tmp_storage_account_name}"  
+}
