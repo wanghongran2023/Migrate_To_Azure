@@ -107,3 +107,12 @@ output "service_bus_connection_string" {
   value     = data.azurerm_servicebus_namespace_authorization_rule.root_manage_access_key.primary_connection_string
   sensitive = true
 }
+
+resource "azurerm_storage_account" "storage_account" {
+  name                     = var.storage_account_config.name
+  resource_group_name      = azurerm_resource_group.resource_group.name
+  location                 = azurerm_resource_group.resource_group.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+  access_tier              = "Cool"
+}
