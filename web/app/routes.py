@@ -70,7 +70,6 @@ def notification():
             with queue_client.get_sender() as sender:
                 message_body = str(notification.id)
                 sender.send(Message(body=message_body.encode('utf-8'))) 
-                logging.info(f"Sent notification ID and data to queue notificationqueue: {notification.id}")
 
             return redirect('/Notifications')
         except Exception as e:
