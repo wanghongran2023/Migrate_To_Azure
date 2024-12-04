@@ -4,7 +4,9 @@ In this project, we are going to migrate a simple application to Azure.
 
 ## Resource Utilization
 
-In this project, we will use Azure resources including a resource group, web app, function app, service plan, service bus and queue, and a storage account. Their estimated monthly costs are listed below.
+In this project, we will use Azure resources, including a resource group, web app, function app, service plan, service bus and queue, storage account, and Azure Database for PostgreSQL Flexible Server.
+
+We will deploy the frontend web application and backend API to an Azure App Service and use a service bus and queue to decouple their interaction. The database will be migrated to Azure Database for PostgreSQL Flexible Server. A storage account is required for deploying the function app, and the resource group is used to organize and group all the resources.
 
  - To deploy the frontend and backend, we chose to use Linux App Service instead of virtual machines. This decision was based on the application's light usage and the environment requirements. By using App Service, Azure handles most of the complex tasks, such as scaling, which significantly reduces operational complexity.
  - If we were to use virtual machines, the cost would remain fixed regardless of usage, making it less cost-effective for this system. Additionally, deploying to virtual machines would require managing the operating system, which increases operational overhead.
