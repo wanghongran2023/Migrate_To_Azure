@@ -2,6 +2,10 @@
 
 In this project, we are going to migrate a simple application to Azure.
 
+## Resource Utilization
+
+
+
 ## Set up
 
 In this project, we will use github action flow and Terraform to build the infratructure and deploy the applicatiuon automatically, to use the workflow, you should set up all the secret and variables below:
