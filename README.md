@@ -12,6 +12,8 @@ We will deploy the frontend web application and backend API to an Azure App Serv
  - If we were to use virtual machines, the cost would remain fixed regardless of usage, making it less cost-effective for this system. Additionally, deploying to virtual machines would require managing the operating system, which increases operational overhead.
  - To further improve cost efficiency, we decided to share a single service plan between the web app and the function app. While this may impact performance slightly, the system's light usage ensures that the performance impact will not be significant.
 
+## Cost Estimation
+
 | Resources Name | Details | Price |
 |----------|----------|----------|
 | 1. Azure Resource Group | Location: West US | free |
