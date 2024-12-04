@@ -6,7 +6,7 @@ In this project, we are going to migrate a simple application to Azure.
 
 In this project, we will use Azure resources including a resource group, web app, function app, service plan, service bus and queue, and a storage account. Their estimated monthly costs are listed below.
 
- - To deploy the frontend and backend, we chose to use Linux App Service instead of Kubernetes or virtual machines. This decision was based on the application's light usage and the environment requirements. By using App Service, Azure handles most of the complex tasks, such as scaling, which significantly reduces operational complexity.
+ - To deploy the frontend and backend, we chose to use Linux App Service instead of virtual machines. This decision was based on the application's light usage and the environment requirements. By using App Service, Azure handles most of the complex tasks, such as scaling, which significantly reduces operational complexity.
  - If we were to use virtual machines, the cost would remain fixed regardless of usage, making it less cost-effective for this system. Additionally, deploying to virtual machines would require managing the operating system, which increases operational overhead.
  - To further improve cost efficiency, we decided to share a single service plan between the web app and the function app. While this may impact performance slightly, the system's light usage ensures that the performance impact will not be significant.
 
