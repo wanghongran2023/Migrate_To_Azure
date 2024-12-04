@@ -36,10 +36,10 @@ def main(msg: func.ServiceBusMessage):
 
         for name, email in attendees:
             email_subject = '{}: {}'.format(name, subject)
-            message = Mail(from_email='drwkwcareer@gmail.com',to_emails=email,subject=email_subject,plain_text_content=message)
+            mailmessage = Mail(from_email='drwkwcareer@gmail.com',to_emails=email,subject=email_subject,plain_text_content=message)
             try:
-                sg = SendGridAPIClient(api_key)
-                response = sg.send(message)
+                sg = SendGridAPIClient(sendgrid_api_key)
+                response = sg.send(mailmessage)
             except Exception as e:
                 logging.error(f"An error occurred: {e}")
 
