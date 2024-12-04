@@ -2,6 +2,14 @@
 
 In this project, we are going to migrate a simple application to Azure.
 
+## Comparision between Existing and Refactor Architecture
+
+#### Existing Architecture:
+The previous system is a monolithic one, where the frontend and backend functionality for notifications is combined into a single function. While this approach is easy to manage, it may cause issues under heavy usage.
+
+Currently, the notification function consists of three main parts: sending emails to all attendees, updating the database, and redirecting to the notifications page. Combining these steps into a single function works fine when there are only a few attendees. However, if the number of attendees is significant, such as 200, the email-sending process might take several minutes to complete. Since the redirection step depends on the completion of the email-sending process, users may experience long waiting times during which the webpage remains unresponsive. This would negatively impact the user experience.
+
+
 ## Resource Utilization
 
 In this project, we will use Azure resources, including a resource group, web app, function app, service plan, service bus and queue, storage account, and Azure Database for PostgreSQL Flexible Server.
