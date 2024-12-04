@@ -4,7 +4,15 @@ In this project, we are going to migrate a simple application to Azure.
 
 ## Resource Utilization
 
-
+| Resources Name | Details | Price |
+|----------|----------|
+| 1. Azure Resource Group | Location: West US | free |
+| 2. Azure Database for PostgreSQL Flexible Server | SKU: B_Standard_B1ms<br/>Storage: 32 GB<br/>Backup Retention: 7 days | 30 USD |
+| 3. Azure App Service Plan | SKU: P0v3 (PremiumV3)<br/>OS: Linux | 65USD |
+| 4. Azure Service Bus | SKU: Standard | 30USD |
+| 5. Azure Storage Account | Replication: LRS<br/>Access Tier: Cool | 10USD |
+| 6. Azure Linux Web App | OS: Linux | included in 3 |
+| 7. Azure Linux Function App | OS: Linux | included in 3 |
 
 ## Set up
 
