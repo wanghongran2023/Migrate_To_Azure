@@ -28,10 +28,8 @@ In this project, we will use github action flow and Terraform to build the infra
 | 7. FUNCTION_NAME		| Name for function app |
 | 8. SERVICEBUS_NAME		| Name for services |
 
-## Deploy Infra
+## Deploy Infra and APp
 
-Run the Infrastructure Construction Workflow. This workflow will use GitHub secrets to update Terraform variables and deploy the storage account, database, resource group, and app services to Azure
+  - Run the Infrastructure Construction Workflow. This workflow will use GitHub secrets and variables to update Terraform variables and deploy the storage account, database, resource group, and app services ... to Azure
+  - However, you still need to check the binding of servicebus and function trigger
 
-## Deploy App
-
-Run the App Deploy Workflow. This workflow will use GitHub secrets to update App variables and deploy the app to Azure App Services
